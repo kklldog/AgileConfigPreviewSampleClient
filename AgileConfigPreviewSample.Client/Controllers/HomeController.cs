@@ -23,6 +23,11 @@ namespace AgileConfigPreviewSample.Client.Controllers
             return View();
         }
 
+        public IActionResult Preview()
+        {
+            return View();
+        }
+
         public IActionResult configs()
         {
             return Json(Program.ConfigClient.Data);

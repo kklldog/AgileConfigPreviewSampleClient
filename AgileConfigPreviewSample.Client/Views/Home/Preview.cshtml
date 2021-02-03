@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center" ng-app="app" ng-controller="ctrl">
+    <div class="text-danger">
+        尝试使用控制台修改test_app的配置项，修改内容会实时同步至以下列表
+    </div>
+    <div>
+        AppID: test_app
+    </div>
+
+    <div>
+        <table class="table table-striped">
+            <tr>
+                <td>键</td>
+                <td>值</td>
+            </tr>
+            <tr ng-repeat="item in configs">
+                <td>{{item.key}}</td>
+                <td>{{item.value}}</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = angular.module('app', []);
+
+        app.controller('ctrl', function ($http, $scope) {
+            var wsurl = 'ws://' + window.location.host + '/ws';
+            console.log(wsurl);
+            var ws = new WebSocket(wsurl);
+            ws.onmessage = function (data) {
+                console.log(data);
+                if (data.data === 'reload') {
+                    load();
+                }
+            }
+
+            $scope.configs = [];
+            var load = function () {
+                $http.get('/home/configs').then(
+                    resp => {
+                        $scope.configs = [];
+                        for (var p in resp.data) {
+                            $scope.configs.push({
+                                key: p,
+                                value: resp.data[p]
+                            });
+                        }
+                    }
+                );
+            }
+            load();
+        });
+    </script>
+}
