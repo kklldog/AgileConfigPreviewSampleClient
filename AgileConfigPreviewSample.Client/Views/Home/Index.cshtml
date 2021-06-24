@@ -7,7 +7,7 @@
 
 
     <style>
-      
+
 
         .full {
             width: 100vw;
@@ -19,6 +19,18 @@
             height: 50%;
         }
     </style>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/layer.js"></script>
+    <script>
+        setTimeout(function () {
+            layer.confirm(`您的 star 是对作者最大的鼓励 ！！！`, {
+                btn: ['去 Github 点赞', '算了吧'] //按钮
+            }, function () {
+                    window.location = 'https://github.com/kklldog/AgileConfig';
+            }, function () {
+            });
+        }, 10000);
+    </script>
     <div class="full">
         <iframe src="http://agileconfig_server.xbaby.xyz"></iframe>
 
